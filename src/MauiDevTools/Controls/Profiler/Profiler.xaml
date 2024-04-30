@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiDevTools.Controls.Profiler"
+             xmlns:controls="clr-namespace:MauiDevTools.Controls">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            
+            <Style x:Key="ProfilerBorderStyle" TargetType="Border">
+                <Setter Property="StrokeShape" Value="RoundRectangle 12" />
+                <Setter Property="StrokeThickness" Value="0" />
+                <Setter Property="BackgroundColor" Value="Black" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="MaximumWidthRequest" Value="600" />
+            </Style>
+            
+            <Style x:Key="FpsCounterContainerStyle" TargetType="Grid">
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Start" />
+                <Setter Property="Margin" Value="12" />
+            </Style>
+
+            <Style x:Key="FpsCounterBorderStyle" TargetType="Border">
+                <Setter Property="StrokeShape" Value="RoundRectangle 12" />
+                <Setter Property="StrokeThickness" Value="0" />
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+            </Style>
+
+            <Style x:Key="SectionTextStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="9" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="Margin" Value="0, 2" />
+            </Style>
+
+            <Style x:Key="FpsCounterTextStyle" TargetType="Label">
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="Margin" Value="12, 2" />
+            </Style>
+
+            <Style x:Key="MemoryChartStyle" TargetType="controls:LineChart">
+      
+            </Style>
+            
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <Border
+        Style="{StaticResource ProfilerBorderStyle}">
+        <Grid
+            RowDefinitions="*, *">
+            <!-- MEMORRY PROFILER -->
+            <Grid
+                RowDefinitions="Auto, Auto, *"
+                Style="{StaticResource FpsCounterContainerStyle}">
+            <Label 
+                Text="Memory (MB)"
+                Style="{StaticResource SectionTextStyle}"/>
+            <Border
+                Grid.Row="1"
+                Style="{StaticResource FpsCounterBorderStyle}">
+                <Label
+                    x:Name="UsedMemory"
+                    Style="{StaticResource FpsCounterTextStyle}"/>
+            </Border>
+            <controls:LineChart
+                x:Name="MemoryChart"
+                Grid.Row="2"
+                LineColor="White"
+                PointColor="LightGray"
+                Margin="12"
+			    AxisLinesColor="White"
+			    AxisLinesFontSize="11"
+			    AxisLinesStrokeSize="0.9"
+			    ChartMargin="12"
+			    ChartStyle="Curve"
+			    DisplayHeaderValues="True"
+			    DisplayHorizontalAxisLines="True"
+			    DisplayValueLabelsOnTop="True"
+			    DisplayVerticalAxisLines="True"
+			    EnableEntryAnimations="True"
+			    ExpandAndFillBackgroundCurvePath="True"
+			    FontSize="10"
+                FooterLabelsFontColor="White" 
+                FontColor="White"
+			    FooterLabelsMargin="8"
+			    FooterLabelsTextSize="9"
+			    HeaderValuesMargin="10"
+			    HeightRequest="150"
+                WidthRequest="200"
+			    HorizontalOptions="Fill"
+			    IsCurveBackgroundFilled="True"
+			    ItemSeparationMargin="8"
+			    PathsColorOpacity="0.65"
+			    PointSize="3"
+			    ReanimateOnPropertyChanged="False"
+			    ShowPointsForCurveStyle="True"
+			    StrokeSize="1.5"
+			    VerticalOptions="Start" />
+            </Grid>
+            <!-- CPU PROFILER -->
+            <Grid
+                Grid.Row="1"
+                RowDefinitions="Auto, Auto, *"
+                Style="{StaticResource FpsCounterContainerStyle}">
+                <Label 
+                    Text="CPU (%)"
+                    Style="{StaticResource SectionTextStyle}"/>
+                <Border
+                    Grid.Row="1"
+                    Style="{StaticResource FpsCounterBorderStyle}">
+                    <Label
+                        x:Name="UsedCpu"
+                        Style="{StaticResource FpsCounterTextStyle}"/>
+                </Border>
+                <controls:LineChart
+                    x:Name="CpuChart"
+                    Grid.Row="2"
+                    BackgroundColor="Red"
+                    LineColor="White" 
+                    PointColor="LightGray"
+                    Margin="5,0,5,0"
+                    AxisLinesColor="White"
+                    AxisLinesFontSize="11"
+                    AxisLinesStrokeSize="0.9"
+                    ChartMargin="20"
+                    ChartStyle="Curve"
+                    DisplayHeaderValues="True"
+                    DisplayHorizontalAxisLines="True"
+                    DisplayValueLabelsOnTop="True"
+                    DisplayVerticalAxisLines="True"
+                    EnableEntryAnimations="True"
+                    ExpandAndFillBackgroundCurvePath="True"
+                    FooterLabelsFontColor="White"
+                    FontColor="White"
+                    FontSize="10"
+                    FooterLabelsMargin="8"
+                    FooterLabelsTextSize="10"
+                    HeaderValuesMargin="20"
+                    HeightRequest="100"
+                    WidthRequest="200"
+                    HorizontalOptions="Fill"
+                    IsCurveBackgroundFilled="True"
+                    ItemSeparationMargin="8"
+                    PathsColorOpacity="0.65"
+                    PointSize="3"
+                    ReanimateOnPropertyChanged="False"
+                    ShowPointsForCurveStyle="True"
+                    StrokeSize="1.5"
+                    VerticalOptions="Start" />      
+            </Grid>
+        </Grid>
+    </Border>
+</ContentView>
