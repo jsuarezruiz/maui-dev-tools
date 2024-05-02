@@ -19,26 +19,15 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="8.0.1" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.21" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.21" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Controls\Profiler\Profiler.xaml.cs">
-	    <DependentUpon>Profiler.xaml</DependentUpon>
-	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiXaml Update="Controls\DevToolsDashboard.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Controls\DevToolsLauncher.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Controls\Profiler\Profiler.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
+	  <Folder Include="Platforms\Android\" />
+	  <Folder Include="Platforms\MacCatalyst\" />
+	  <Folder Include="Platforms\Windows\" />
 	</ItemGroup>
 
 </Project>

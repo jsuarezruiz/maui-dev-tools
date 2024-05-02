@@ -1,9 +1,11 @@
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui.Views;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
 namespace MauiDevTools.Controls;
 
-public partial class Profiler : ContentView, IDisposable
+public partial class Profiler : Popup, IDisposable
 {
     readonly IDispatcherTimer _timer;
     long _peakMemory;
@@ -17,6 +19,10 @@ public partial class Profiler : ContentView, IDisposable
 
         _memoryItems = new ObservableCollection<ChartItem>();
         _cpuItems = new ObservableCollection<ChartItem>();
+        
+        Expanded = false;
+
+        LoadDataAsync();
 
         _timer = Dispatcher.CreateTimer();
         _timer.Interval = TimeSpan.FromSeconds(1);
@@ -24,8 +30,17 @@ public partial class Profiler : ContentView, IDisposable
         _timer.Start();
     }
 
+    bool Expanded { get; set; }
+
     async void OnElapsed(object? sender, EventArgs e)
     {
+        await LoadDataAsync();
+    }
+
+    async Task LoadDataAsync()
+    {
+        MemoryChart.IsVisible = CpuChart.IsVisible = Expanded;
+
         var usedMemory = GetMemoryUsageForProcess();
 
         if (usedMemory > _peakMemory)
@@ -38,53 +53,54 @@ public partial class Profiler : ContentView, IDisposable
             _lowestMemory = usedMemory;
 
         var usedMemoryInMB = usedMemory / (1024 * 1024);
+        
+        UsedMemory.Text = usedMemoryInMB.ToString("F2");
 
-
-        if (_memoryItems.Count == 0)
+        if (Expanded)
         {
-            for (int i = 0; i < 10; i++)
+            if (_memoryItems.Count == 0)
+            {
+                for (int i = 0; i < 10; i++)
+                    _memoryItems.Add(new ChartItem { Label = "-", Value = usedMemoryInMB });
+            }
+            else
                 _memoryItems.Add(new ChartItem { Label = "-", Value = usedMemoryInMB });
+
+            if (_memoryItems.Count > 10)
+                _memoryItems.RemoveAt(0);
+
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                MemoryChart.Entries = _memoryItems;
+                MemoryChart.Invalidate();
+            });
         }
-        else
-            _memoryItems.Add(new ChartItem { Label = "-", Value = usedMemoryInMB });
 
-        if (_memoryItems.Count > 10)
-            _memoryItems.RemoveAt(0);
-
-        MainThread.BeginInvokeOnMainThread(() =>
-        {
-            UsedMemory.Text = usedMemoryInMB.ToString();
-            MemoryChart.Entries = _memoryItems;
-            MemoryChart.Invalidate();
-        });
-
-        Console.WriteLine(
-                "Memory, Used: {0} ({1}MB), Peak: {2}, Lowest: {3}, MaxConsumed: {4}",
-                usedMemory,
-                usedMemoryInMB,
-                _peakMemory,
-                _lowestMemory,
-                _peakMemory - _lowestMemory);
+        // Console.WriteLine("Memory, Used: {0} ({1}MB), Peak: {2}, Lowest: {3}, MaxConsumed: {4}", usedMemory, usedMemoryInMB, _peakMemory, _lowestMemory, _peakMemory - _lowestMemory);
 
         var cpu = await GetCpuUsageForProcess();
 
-        if (_cpuItems.Count == 0)
+        UsedCpu.Text = cpu.ToString("F2");
+
+        if (Expanded)
         {
-            for (int i = 0; i < 10; i++)
+            if (_cpuItems.Count == 0)
+            {
+                for (int i = 0; i < 10; i++)
+                    _cpuItems.Add(new ChartItem { Label = "-", Value = cpu });
+            }
+            else
                 _cpuItems.Add(new ChartItem { Label = "-", Value = cpu });
+
+            if (_cpuItems.Count > 10)
+                _cpuItems.RemoveAt(0);
+
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                CpuChart.Entries = _cpuItems;
+                CpuChart.Invalidate();
+            });
         }
-        else
-            _cpuItems.Add(new ChartItem { Label = "-", Value = cpu });
-
-        if (_cpuItems.Count > 10)
-            _cpuItems.RemoveAt(0);
-
-        MainThread.BeginInvokeOnMainThread(() =>
-        {
-            UsedCpu.Text = cpu.ToString();
-            CpuChart.Entries = _cpuItems;
-            CpuChart.Invalidate();
-        });
     }
 
     public void Dispose()
@@ -108,5 +124,19 @@ public partial class Profiler : ContentView, IDisposable
         var totalMsPassed = (endTime - startTime).TotalMilliseconds;
         var cpuUsageTotal = cpuUsedMs / (Environment.ProcessorCount * totalMsPassed);
         return (float)cpuUsageTotal * 100;
+    }
+
+    void ButtonTapped(object sender, TappedEventArgs e)
+    {
+        if(Expanded)
+        {
+            Expanded = false;
+            ButtonText.Text = "Expand";
+        }
+        else
+        {
+            Expanded = true;
+            ButtonText.Text = "Collapse";
+        }
     }
 }

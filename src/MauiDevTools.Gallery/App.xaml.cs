@@ -1,6 +1,8 @@
-﻿namespace MauiDevTools.Gallery
+﻿using MauiDevTools.Controls;
+
+namespace MauiDevTools.Gallery
 {
-    public partial class App : Application
+    public partial class App : DevToolsApplication
     {
         public App()
         {

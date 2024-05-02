@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MauiDevTools.Gallery.MainPage"
-             xmlns:controls="clr-namespace:MauiDevTools.Controls;assembly=MauiDevTools">
+             x:Class="MauiDevTools.Gallery.MainPage">
 
     <Grid>
         <ScrollView>
@@ -36,8 +35,6 @@
 
             </VerticalStackLayout>
         </ScrollView>
-        
-        <controls:DevTools />
-    
+  
     </Grid>
 </ContentPage>

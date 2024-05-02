@@ -2,7 +2,8 @@
 {
     internal class LineChart : Chart
     {
-        private LineChartDrawable _currentChart = new LineChartDrawable();
+        LineChartDrawable _currentChart = new LineChartDrawable();
+
         #region DependencyProperties
 
         public static readonly BindableProperty ExpandAndFillBackgroundCurvePathProperty = BindableProperty.Create(nameof(ExpandAndFillBackgroundCurvePath), typeof(bool), typeof(LineChart), false, propertyChanged: (bindableObject, oldValue, newValue) =>

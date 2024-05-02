@@ -10,12 +10,12 @@ namespace MauiDevTools.Gallery
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiDevTools()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                })
-                .UseMauiDevTools();
+                });
 
 #if DEBUG
     		builder.Logging.AddDebug();

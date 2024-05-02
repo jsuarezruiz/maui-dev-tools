@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MauiDevTools.Controls.DevToolsDashboard">
-    <ContentView.Resources>
+<toolkit:Popup 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="MauiDevTools.Controls.DevToolsDashboard"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    HorizontalOptions="Center"
+    VerticalOptions="Start">
+    <toolkit:Popup.Resources>
         <ResourceDictionary>
 
             <x:String x:Key="PerfOverlayIcon">M0,9.7329712L9.1329965,9.7329712 9.1329965,31.932983 0,31.932983z M22.000003,6.6669922L31.133,6.6669922 31.133,31.934021 22.000003,31.934021z M11.000002,0L20.132998,0 20.132998,32 11.000002,32z</x:String>
@@ -12,7 +16,7 @@
             <x:String x:Key="ColorPickerIcon">M19.047754,10.714463L3.1478271,26.76004 2.1438313,29.755003 2.9538279,30.571993 5.9308167,29.586004 21.838907,13.531265z M28.721553,1.9806394C28.262309,1.9805097,27.802815,2.1497626,27.46632,2.4887867L22.839389,7.1588301C22.463395,7.5378022,21.794406,7.5378022,21.418412,7.1588301L19.182445,4.9008054 17.642467,6.4548416 19.590655,8.4209041 19.627175,8.4419069C19.682187,8.4774379,19.733765,8.5188904,19.780765,8.5662651L23.979749,12.804213C24.028124,12.852837,24.070452,12.905211,24.106732,12.960401L24.132834,13.004757 26.058344,14.947933 27.598318,13.394935 25.348351,11.124886C24.96136,10.734865,24.96136,10.10589,25.348351,9.7168464L29.975286,5.0468034C30.674273,4.3417768 30.674273,3.1937518 29.975286,2.4887867 29.639791,2.1502814 29.180797,1.9807691 28.721553,1.9806394z M28.721429,0C29.70179,0 30.681775,0.36024943 31.395263,1.0807482 32.864244,2.5617857 32.864244,4.9728279 31.395263,6.4548416L27.46632,10.420897 29.716287,12.690885C30.102283,13.080904,30.102283,13.709941,29.716287,14.099899L26.768332,17.07296C26.580336,17.262966 26.325338,17.368984 26.058344,17.368984 25.791346,17.368984 25.536352,17.262966 25.348351,17.07296L23.246725,14.952021 7.1838121,31.163986C7.072813,31.275984,6.9368134,31.358982,6.7878141,31.408983L2.9938278,32.665966C2.8908281,32.699966 2.7848291,32.716965 2.6798296,32.716965 2.4168301,32.716965 2.159831,32.612968 1.968832,32.420971L0.28983879,30.72599C0.023838997,30.456995,-0.068160057,30.061998,0.051838875,29.704004L1.3258343,25.904051C1.3738346,25.759052,1.4558344,25.627054,1.5628338,25.518055L17.639454,9.2932214 15.524497,7.1588301C15.138502,6.7688107,15.138502,6.1408114,15.524497,5.750792L18.471453,2.7757775C18.847447,2.3967445,19.51644,2.3967445,19.892434,2.7757775L22.1294,5.0338025 26.045343,1.0807482C26.760333,0.36024943,27.741069,0,28.721429,0z</x:String>
            
             <Style x:Key="DashboardBorderStyle" TargetType="Border">
-                <Setter Property="StrokeShape" Value="RoundRectangle 12" />
+                <Setter Property="StrokeShape" Value="RoundRectangle  0" />
                 <Setter Property="StrokeThickness" Value="0" />
                 <Setter Property="BackgroundColor" Value="Black" />
                 <Setter Property="HorizontalOptions" Value="Center" />
@@ -58,7 +62,7 @@
             </Style>
             
         </ResourceDictionary>
-    </ContentView.Resources>
+    </toolkit:Popup.Resources>
     <Border
         Style="{StaticResource DashboardBorderStyle}">
         <Grid
@@ -115,9 +119,11 @@
             <Grid
                 Grid.Row="1"
                 Grid.Column="2"
-                RowDefinitions="*, Auto">
+                RowDefinitions="*, Auto"
+                IsEnabled="False">
                 <Border
-                    Style="{StaticResource DashboardIconBorderStyle}">
+                    Style="{StaticResource DashboardIconBorderStyle}"
+                    Opacity="0.5">
                     <Path 
                         Data="{StaticResource DebugLogsIcon}"/>
                 </Border>
@@ -130,9 +136,11 @@
             <Grid
                 Grid.Row="1"
                 Grid.Column="3"
-                RowDefinitions="*, Auto">
+                RowDefinitions="*, Auto"
+                IsEnabled="False">
                 <Border
-                    Style="{StaticResource DashboardIconBorderStyle}">
+                    Style="{StaticResource DashboardIconBorderStyle}"
+                    Opacity="0.5">
                     <Path 
                         Data="{StaticResource DeviceInfoIcon}"/>
                 </Border>
@@ -144,9 +152,11 @@
             <!-- COLOR PICKER -->
             <Grid
                 Grid.Row="2"
-                RowDefinitions="*, Auto">
+                RowDefinitions="*, Auto"
+                IsEnabled="False">
                 <Border
-                    Style="{StaticResource DashboardIconBorderStyle}">
+                    Style="{StaticResource DashboardIconBorderStyle}"
+                    Opacity="0.5">
                     <Path 
                         Data="{StaticResource ColorPickerIcon}"/>
                 </Border>
@@ -157,4 +167,4 @@
             </Grid>
         </Grid>
     </Border>
-</ContentView>
+</toolkit:Popup>
