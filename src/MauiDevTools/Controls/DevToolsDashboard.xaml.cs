@@ -1,4 +1,5 @@
 using CommunityToolkit.Maui.Views;
+using Microsoft.Maui.Platform;
 
 namespace MauiDevTools.Controls;
 
@@ -37,6 +38,21 @@ public partial class DevToolsDashboard : Popup
 
     void DebugPaintTapped(object sender, TappedEventArgs e)
     {
+        var random = new Random();
+
+        Microsoft.Maui.Handlers.ElementHandler.ElementMapper.AppendToMapping("DebugPaint", (handler, view) =>
+        {
+#if ANDROID
+             
+            if (handler.PlatformView is Android.Views.View aView)
+            {     
+                aView.Background = null;
+                var color = Color.FromRgb(random.Next(0, 255), random.Next(0, 255), random.Next(0, 255));     
+                aView.SetBackgroundColor(color.ToPlatform());
+            }
+#endif
+        });
+
         DebugPaint?.Invoke(this, EventArgs.Empty);
     }
 }

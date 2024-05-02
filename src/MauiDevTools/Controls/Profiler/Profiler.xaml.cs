@@ -115,11 +115,15 @@ public partial class Profiler : Popup, IDisposable
     async Task<float> GetCpuUsageForProcess()
     {
         var startTime = DateTime.UtcNow;
+#pragma warning disable CA1416 // Validate platform compatibility
         var startCpuUsage = Process.GetCurrentProcess().TotalProcessorTime;
+#pragma warning restore CA1416 // Validate platform compatibility
         await Task.Delay(500);
 
         var endTime = DateTime.UtcNow;
+#pragma warning disable CA1416 // Validate platform compatibility
         var endCpuUsage = Process.GetCurrentProcess().TotalProcessorTime;
+#pragma warning restore CA1416 // Validate platform compatibility
         var cpuUsedMs = (endCpuUsage - startCpuUsage).TotalMilliseconds;
         var totalMsPassed = (endTime - startTime).TotalMilliseconds;
         var cpuUsageTotal = cpuUsedMs / (Environment.ProcessorCount * totalMsPassed);
