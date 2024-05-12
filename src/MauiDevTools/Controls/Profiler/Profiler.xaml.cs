@@ -1,5 +1,5 @@
-using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Views;
+using MauiDevTools.Extensions;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
@@ -22,7 +22,7 @@ public partial class Profiler : Popup, IDisposable
         
         Expanded = false;
 
-        LoadDataAsync();
+        LoadDataAsync().FireAndForget();
 
         _timer = Dispatcher.CreateTimer();
         _timer.Interval = TimeSpan.FromSeconds(1);
