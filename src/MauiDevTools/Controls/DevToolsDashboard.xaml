@@ -100,13 +100,11 @@
             <Grid
                 Grid.Row="1"
                 Grid.Column="1"
-                RowDefinitions="*, Auto">
-                <Grid.GestureRecognizers>
-                    <TapGestureRecognizer 
-                        Tapped="DebugPaintTapped"/>
-                </Grid.GestureRecognizers>
+                RowDefinitions="*, Auto"
+                IsEnabled="False">
                 <Border
-                    Style="{StaticResource DashboardIconBorderStyle}">
+                    Style="{StaticResource DashboardIconBorderStyle}"
+                    Opacity="0.5">
                     <Path 
                         Data="{StaticResource DebugPaintIcon}"/>
                 </Border>
